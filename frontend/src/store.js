@@ -1,8 +1,8 @@
-import { createStore, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
+// import { createStore, combineReducers } from 'redux'
+// import { Provider } from 'react-redux'
 
-const rootReducer = combineReducers({
-    // here reducer
-})
+// const rootReducer = combineReducers({
+//     // here reducer
+// })
 
-const store = createStore()
+// const store = createStore()
