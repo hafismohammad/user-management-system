@@ -38,7 +38,7 @@ function SignUp() {
     } else {
       const userData = {
         name,
-        email,
+        email, 
         phone,
         password,
       };

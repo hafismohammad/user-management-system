@@ -7,6 +7,7 @@ import LoginPage from './pages/user/LoginPage';
 import SignipPage from './pages/user/SignipPage';
 import HeaderPage  from './pages/user/HeaderPage';
 import ProfilePage from './pages/user/ProfilePage';
+import ProfileEditPage from './pages/user/ProfileEditPage';
 
 
 
@@ -20,6 +21,7 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/signup' element={<SignipPage />} />
             <Route path='/' element={<ProfilePage />} />
+            <Route path='/profile-edit' element={<ProfileEditPage />} />
           </Routes>
         </div>
       </Router>

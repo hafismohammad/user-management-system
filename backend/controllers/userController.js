@@ -8,15 +8,24 @@ const generateToken = require('../utils/jwt');
 const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     try {
+
         const user = await User.findOne({ email });
+
+        
         if (user && (await bcrypt.compare(password, user.password))) {
+           
             res.json({
-                _id: user.id,
+                _id: user._id,
+                name: user.name,
                 email: user.email,
+                phone: user.phone,
+                image:user.profileImage,
                 token: generateToken({ userId: user._id }),
             });
         } else {
-            res.status(400).json({ message: 'Invalid email or password' });
+            console.log('Invalid email or password' );
+            res.status(400)
+            throw Error('Invalid email or password' )
         }
     } catch (error) {
         res.status(500).json({ message: 'Error during login' });
@@ -70,22 +79,46 @@ const signUp = async (req, res) => {
     }
 };
 
-const jwttest = asyncHandler (async = (req, res) => {
-    try {
-        console.log('jwttest');
-        res.status(200).json({message: 'hello token'})
-    } catch (error) {
-        res.status(500).json({message: ' error '})
-        
-    }
-})
 
-const profile = async (req, res) => {
+const updateProfile = asyncHandler(async (req, res) => {
+    // Extract the data from req.body and req.file
+    const { name, email, phone } = req.body;
+    const user = { name, email, phone };
+    
     try {
-        console.log('user profile');
-    } catch (error) {
-        res.status(500).json({message: 'error'})
-    }
-}
+        const existingUser = await User.findById(req.user._id);
 
-module.exports = { login, signUp , jwttest, profile};
+        if (!existingUser) {
+            res.status(404);
+            throw new Error('User not found');
+        }
+
+        if (name) existingUser.name = name;
+        if (email) existingUser.email = email;
+        if (phone) existingUser.phone = phone;
+
+        console.log(req.file);
+        if (req.file) {
+            existingUser.profileImage = req.file.filename; // Save the filename
+        }
+
+        const updatedUser = await existingUser.save();
+console.log(updatedUser);
+        res.status(200).json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            phone: updatedUser.phone,
+            profileImage: updatedUser.profileImage,
+            token: generateToken({ userId: updatedUser._id }),
+        });
+    } catch (error) {
+        res.status(500);
+        throw new Error('Failed to update user');
+    }
+});
+
+module.exports = { updateProfile };
+
+
+module.exports = { login, signUp, updateProfile };
