@@ -33,8 +33,7 @@ const updateProfile = async ({formData, token}) => {
       headers: {
           'Content-Type': 'multipart/form-data',
          'Authorization': `Bearer ${token}`
-      }
-      
+      }  
   } );
     
     if (response.data) {

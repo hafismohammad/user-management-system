@@ -23,6 +23,8 @@ app.use(cookieParser());
 app.use(cors());
 
 const userRoutes = require("./routes/userRoutes");
+const adminLogin = require("./routes/adminRoutes");
 app.use("/", userRoutes);
+app.use("/admin", adminLogin)
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

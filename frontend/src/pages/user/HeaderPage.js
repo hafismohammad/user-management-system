@@ -3,9 +3,11 @@ import Header from '../../components/user/Header'
 
 function HeaderPage() {
   return (
-    <div>
-      <Header/>
-    </div>
+    <>
+    
+    <Header/>
+    </>
+   
   )
 }
 

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, reset } from '../../redux/userSlice';
 import defaultImage from '../../assets/profile-dummy.avif'; 
 import {  useNavigate } from 'react-router-dom';
+import HeaderComponent from './Header';
 
 function EditProfile() {
     const dispatch = useDispatch();
@@ -38,7 +39,9 @@ function EditProfile() {
     };
 
     return (
-        <div className="bg-slate-800 border border-slate-400 h-auto w-[40rem] px-8 py-10 rounded-md shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 max-w-lg mx-auto my-10">
+        <>
+         <HeaderComponent />
+         <div className="bg-slate-800 border border-slate-400 h-auto w-[40rem] px-8 py-10 rounded-md shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 max-w-lg mx-auto my-10">
             <div className="text-center mb-6 mt-5">
                 <h1 className="text-2xl font-semibold text-white">Welcome {user.name}</h1>
             </div>
@@ -96,6 +99,8 @@ function EditProfile() {
                 </div>
             </form>
         </div>
+        </>
+       
     );
 }
 

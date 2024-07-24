@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Spinner from "./Spinner";
 import { register, reset } from "../../redux/userSlice";
 
@@ -33,8 +34,41 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (/^\d/.test(name)) {
+      toast.error('Name cannot start with a number');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address');
+      return; 
+    }
+
+    if (parseInt(phone) < 0 || phone.length !== 10) {
+      toast.error('Please enter a valid phone number');
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      toast.error('Password must contain at least one uppercase letter.');
+      return;
+    }
+
+    if (!/[!@#$%^&*]/.test(password)) {
+      toast.error('Password must contain at least one special character.');      
+      return;
+    }
+
     if (password !== cpassword) {
       toast.error("Passwords do not match");
+      return
+
     } else {
       const userData = {
         name,
@@ -51,7 +85,8 @@ function SignUp() {
   }
 
   return (
-    <div className="bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
+    <div className='flex-grow flex items-center justify-center mt-20'>
+ <div className="bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
       <h1 className="font-semibold text-4xl text-center mt-2 mb-8 text-white">
         Sign Up
       </h1>
@@ -126,6 +161,8 @@ function SignUp() {
         </span>
       </div>
     </div>
+    </div>
+   
   );
 }
 

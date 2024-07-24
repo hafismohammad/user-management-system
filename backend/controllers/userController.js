@@ -19,7 +19,7 @@ const login = asyncHandler(async (req, res) => {
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
-                image:user.profileImage,
+                profileImage:user.profileImage,
                 token: generateToken({ userId: user._id }),
             });
         } else {
@@ -87,7 +87,7 @@ const updateProfile = asyncHandler(async (req, res) => {
     
     try {
         const existingUser = await User.findById(req.user._id);
-
+console.log(existingUser);
         if (!existingUser) {
             res.status(404);
             throw new Error('User not found');
@@ -97,13 +97,12 @@ const updateProfile = asyncHandler(async (req, res) => {
         if (email) existingUser.email = email;
         if (phone) existingUser.phone = phone;
 
-        console.log(req.file);
+       
         if (req.file) {
-            existingUser.profileImage = req.file.filename; // Save the filename
+            existingUser.profileImage = req.file.filename; 
         }
 
         const updatedUser = await existingUser.save();
-console.log(updatedUser);
         res.status(200).json({
             _id: updatedUser._id,
             name: updatedUser.name,
@@ -117,8 +116,6 @@ console.log(updatedUser);
         throw new Error('Failed to update user');
     }
 });
-
-module.exports = { updateProfile };
 
 
 module.exports = { login, signUp, updateProfile };

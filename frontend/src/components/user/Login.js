@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { login, reset } from '../../redux/userSlice'
 import {toast} from 'react-toastify'
 import Spinner from "./Spinner";
+import Header from '../../components/user/Header'; 
 
  
 function Login() {
@@ -44,28 +45,30 @@ function Login() {
   }
 
   return (
-     <div className="bg-slate-800  border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
+    <>
+    <div  className='flex-grow flex items-center justify-center mt-40'>
+    <div className="bg-slate-800  border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
       <h1 className='font-semibold text-4xl text-center mt-2 mb-8 text-white'>Login</h1>
 
       <form onSubmit={handleSubmit} >
         <div className='relative my-4'>
-          <label className='text-white mb-2 text-sm block'>Enter Your Email</label>
+          <label className='text-white mb-2 text-sm '>Enter Your Email</label>
           <input
             type="text"
             name='email'
             value={email}
             onChange={(e) => setMail(e.target.value)}
-            className='w-full p-1 border-2 text-white border-slate-400 rounded-md bg-transparent hover:border-blue-700'
+            className='w-full p-1 mt-2 border-2 text-white border-slate-400 rounded-md bg-transparent hover:border-blue-700'
           />
         </div>
         <div className='relative my-4'>
-          <label className='text-white mb-2 text-sm block'>Enter Your Password</label>
+          <label className='text-white mb-2 text-sm '>Enter Your Password</label>
           <input
             type="password"
             name='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='w-full p-1 border-2 text-white border-slate-400 rounded-md bg-transparent hover:border-blue-700'
+            className='w-full p-1 mt-2 border-2 text-white border-slate-400 rounded-md bg-transparent hover:border-blue-700'
           />
         </div>
         <div className='flex justify-center mt-4'>
@@ -77,6 +80,9 @@ function Login() {
         <span className='text-white'>Don't have an account? <Link to='/signup' className='text-blue-500 hover:underline'>Sign Up</Link></span>
       </div>
     </div>
+    </div>
+     
+    </>
   );
 }
 

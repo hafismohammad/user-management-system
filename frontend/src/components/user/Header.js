@@ -17,7 +17,7 @@ function HeaderComponent() {
     };
 
     return (
-        <header className='flex justify-between items-center p-4 bg-gray-800 text-white'>
+        <header className='w-full flex justify-between items-center p-4 bg-gray-800 text-white '>
             <div>
                 <Link to='/' className='text-xl font-bold'>UMS</Link>
             </div>

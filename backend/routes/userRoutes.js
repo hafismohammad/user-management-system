@@ -4,10 +4,6 @@ const { login, signUp, updateProfile } = require('../controllers/userController'
 const { protect } = require('../middleware/authMiddleware');
 const upload = require('../utils/multer')
 
-// Setup multer for image uploadrd
-
-
-
 router.post('/login', login);
 router.post('/signup', signUp);
 router.put('/update-profile', protect, upload.single('image'), updateProfile);
