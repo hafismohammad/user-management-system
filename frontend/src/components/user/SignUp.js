@@ -34,6 +34,12 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if(!email || !password || !name || !phone) {
+      console.log('heerre');
+      toast.error('Please fill the fields');
+      return; 
+    }
+
     if (/^\d/.test(name)) {
       toast.error('Name cannot start with a number');
       return;

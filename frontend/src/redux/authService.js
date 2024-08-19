@@ -28,7 +28,7 @@ const login = async (userData) => {
 // Update Profile 
 const updateProfile = async ({formData, token}) => {
     // const user = JSON.parse(localStorage.getItem('user'));
- 
+ console.log('update profile',formData);
     const response = await axios.put(`${API_URL}/update-profile`, formData,{
       headers: {
           'Content-Type': 'multipart/form-data',

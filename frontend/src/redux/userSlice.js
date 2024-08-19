@@ -27,7 +27,6 @@ export const login = createAsyncThunk('userAuth/login', async (formData, thunkAP
 // Update user profile
 export const updateProfile = createAsyncThunk('userAuth/updateProfile', async ({formData, token}, thunkAPI) => {
     try {
-        // console.log('update profile userslice', formData);
         return await authService.updateProfile({formData, token});
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -44,66 +43,77 @@ export const logout = createAsyncThunk('userAuth/logout', async () => {
 export const userSlice = createSlice({
     name: 'userAuth',
     initialState: {
-        user: user ? user : null,
-        isError: false,
-        isSuccess: false,
-        isLoading: false,
-        message: ''
+      user: user ? user : null,
+      isError: false,
+      isSuccess: false,
+      isLoading: false,
+      message: '',
     },
     reducers: {
-        reset: (state) => {
-            state.isError = false;
-            state.isSuccess = false;
-            state.isLoading = false;
-            state.message = '';
-        }
+      reset: (state) => {
+        state.isError = false;
+        state.isSuccess = false;
+        state.isLoading = false;
+        state.message = '';
+      }
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(register.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(register.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                // console.log("This is the action.payload in regisgte.fullfilled: ", action.payload)
-                state.user = action.payload;
-            })
-            .addCase(register.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.message = action.payload;
-                state.user = null;
-            })
-            .addCase(login.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(login.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.user = action.payload
-            })
-            .addCase(login.rejected, (state, action) => {
-                state.isLoading = false
-                state.isError = true
-                state.message = action.payload
-                state.user = null
-            })
-            .addCase(updateProfile.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(updateProfile.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                state.user = action.payload;
-            })
-            .addCase(updateProfile.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.message = action.payload;
-            });
-    }
-});
+      builder
+        // Register
+        .addCase(register.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(register.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.user = action.payload;
+        })
+        .addCase(register.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.message = action.payload;
+          state.user = null;
+        })
+        
+        // Login
+        .addCase(login.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(login.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.user = action.payload;
+        })
+        .addCase(login.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.message = action.payload;
+          state.user = null;
+        })
+        
+        // Logout
+        .addCase(logout.fulfilled, (state) => {
+          state.user = null;  
+          state.isSuccess = false;
+        })
+        
+        // Update Profile
+        .addCase(updateProfile.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(updateProfile.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.user = action.payload;
+        })
+        .addCase(updateProfile.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.message = action.payload;
+        });
+    },
+  });
+  
 
 export const { reset } = userSlice.actions;
 export default userSlice.reducer;

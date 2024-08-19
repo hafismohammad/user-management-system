@@ -26,6 +26,18 @@ console.log(admin);
   const handleClick = (e) => {
     e.preventDefault()
 
+    if(!email || !password) {
+      toast.error('Please fill the fields');
+      return; 
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address');
+      return; 
+    }
+    
+
     const adminData = {
       email,
       password
